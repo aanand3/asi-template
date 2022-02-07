@@ -12,4 +12,21 @@ data class Person(
     val id: Long = 0,
 
     val name: String,
-)
+) {
+    fun toDTO(): PersonDTO =
+        PersonDTO(
+            id = this.id,
+            name = this.name
+        )
+}
+
+data class PersonDTO(
+    val id: Long,
+    val name: String
+) {
+    fun toEntity(): Person =
+        Person(
+            id = this.id,
+            name = this.name
+        )
+}

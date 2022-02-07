@@ -1,42 +1,46 @@
-import React, { FormEvent, useEffect, useState } from "react";
-import { createTeam, getTeams } from "./teamsApiClient";
+import React, {FormEvent, useEffect, useState} from "react";
+import {createTeam, getTeams} from "./teamsApiClient";
+import {PersonFormAndList} from "./person/PersonFormAndList";
 
 const App = () => {
-  const [teams, setTeams] = useState<string[]>([]);
-  const [teamName, setTeamName] = useState<string>("");
+    const [teams, setTeams] = useState<string[]>([]);
+    const [teamName, setTeamName] = useState<string>("");
 
-  const setTeamNameFromInput = (event: FormEvent<HTMLInputElement>) => {
-    setTeamName(event.currentTarget.value);
-  };
+    const setTeamNameFromInput = (event: FormEvent<HTMLInputElement>) => {
+        setTeamName(event.currentTarget.value);
+    };
 
-  const submitForm = (event: FormEvent) => {
-    event.preventDefault();
-    createTeam(teamName).then(() => {
-      getTeams().then(setTeams);
-    });
-  };
+    const submitForm = (event: FormEvent) => {
+        event.preventDefault();
+        createTeam(teamName).then(() => {
+            getTeams().then(setTeams);
+        });
+    };
 
-  useEffect(() => {
-    getTeams().then(setTeams);
-  }, []);
+    useEffect(() => {
+        getTeams().then(setTeams);
+    }, []);
 
-  return (
-    <>
-      <ul>
-        {teams.map((team, index) => (
-          <li key={index}>{team}</li>
-        ))}
-      </ul>
+    return (
+        <>
+            <ul>
+                {teams.map((team, index) => (
+                    <li key={index}>{team}</li>
+                ))}
+            </ul>
 
-      <form onSubmit={submitForm}>
-        <label>
-          Team Name
-          <input name="team-name" type="text" onChange={setTeamNameFromInput} />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    </>
-  );
+            <form onSubmit={submitForm}>
+                <label>
+                    Team Name
+                    <input name="team-name" type="text" onChange={setTeamNameFromInput}/>
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+            <div>
+                {/*<PersonFormAndList/>*/}
+            </div>
+        </>
+    );
 }
 
 export default App;

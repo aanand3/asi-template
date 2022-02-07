@@ -1,28 +1,24 @@
 package mil.army.futures.asitemplate.service
 
-import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import mil.army.futures.asitemplate.Team
 import mil.army.futures.asitemplate.repositories.TeamRepository
 import mil.army.futures.asitemplate.services.TeamService
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@ExtendWith(SpringExtension::class)
+@ExtendWith(MockKExtension::class)
 internal class TeamServiceTest {
-    @MockkBean
-    private lateinit var teamRepository: TeamRepository
+    @MockK
+    lateinit var teamRepository: TeamRepository
 
-    private lateinit var teamService: TeamService
-
-    @BeforeEach
-    fun setUp() {
-        teamService = TeamService(teamRepository)
-    }
+    @InjectMockKs
+    lateinit var teamService: TeamService
 
     @Test
     fun `should retrieve all teams`() {
