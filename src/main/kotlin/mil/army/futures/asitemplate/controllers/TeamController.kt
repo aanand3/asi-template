@@ -13,7 +13,6 @@ import java.net.URI
 
 @RestController
 class TeamController(private val teamService: TeamService) {
-
     @GetMapping("/teams")
     fun getTeams(): List<String> {
         val teamNames = ArrayList<String>()
