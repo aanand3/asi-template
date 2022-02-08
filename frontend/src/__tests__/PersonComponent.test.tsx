@@ -1,9 +1,10 @@
 import userEvent from "@testing-library/user-event";
 import {render, screen} from "@testing-library/react";
-import App from "../App";
 import React from "react";
 import {PersonFormAndList} from "../person/PersonFormAndList";
 import {createPerson, getPersons} from "../person/personsApiClient";
+
+jest.mock("../person/personsApiClient")
 
 const mockGetPersons = getPersons as jest.MockedFunction<typeof getPersons>;
 const mockCreatePerson = createPerson as jest.MockedFunction<typeof createPerson>;
@@ -17,9 +18,9 @@ describe('Persons Page', () => {
 
     describe("when I view persons", () => {
         it("should display existing persons", async () => {
-            mockGetPersons.mockResolvedValue(["a person", "a second person"]);
+            mockGetPersons.mockResolvedValue([{id: 1, name: "a person"}, {id: 2, name: "a second person"}])
 
-            render(<PersonFormAndList />);
+            render(<PersonFormAndList/>);
 
             expect(await screen.findByText("a person")).toBeInTheDocument();
             expect(screen.getByText("a second person")).toBeInTheDocument();
@@ -30,9 +31,9 @@ describe('Persons Page', () => {
         it("should display the new person in existing persons", async () => {
             mockCreatePerson.mockResolvedValueOnce("a person");
             mockGetPersons.mockResolvedValueOnce([]);
-            mockGetPersons.mockResolvedValueOnce(["a person"]);
+            mockGetPersons.mockResolvedValueOnce([{id: 1, name: "a person"}]);
 
-            render(<PersonFormAndList />);
+            render(<PersonFormAndList/>);
             addPerson("a person");
 
             expect(mockCreatePerson).toHaveBeenCalledWith("a person");
