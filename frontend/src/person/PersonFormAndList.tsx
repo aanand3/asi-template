@@ -20,7 +20,7 @@ export const PersonFormAndList = () => {
         });
     };
 
-    let peopleList = persons.map(person => {
+    const peopleList = persons.map(person => {
         return <li key={person.id}>{person.name}</li>
     });
 
